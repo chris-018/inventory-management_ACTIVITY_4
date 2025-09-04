@@ -1,0 +1,77 @@
+using System;
+
+class InventoryManagement
+{
+    static void Main(string[] args)
+    {
+        string[,] products = new string[2, 3] { { "Apples", "Milk", "Bread" }, { "10", "5", "20" } };
+        string[] initialStock = { "10", "5", "20" };
+        int choice;
+
+        do
+        {
+            Console.WriteLine("Inventory Management System");
+            Console.WriteLine("1. View Inventory");
+            Console.WriteLine("2. Update Stock");
+            Console.WriteLine("3. Reset Inventory");
+            Console.WriteLine("4. Exit");
+            Console.Write("Enter your choice: ");
+            choice = Convert.ToInt32(Console.ReadLine());
+
+            switch (choice)
+            {
+                case 1:
+                    ViewInventory(products);
+                    break;
+                case 2:
+                    UpdateStock(products);
+                    break;
+                case 3:
+                    ResetInventory(products, initialStock);
+                    break;
+                case 4:
+                    Console.WriteLine("Exiting the program.");
+                    break;
+                default:
+                    Console.WriteLine("Invalid choice. Please try again.");
+                    break;
+            }
+        } while (choice != 4);
+    }
+
+    static void ViewInventory(string[,] products)
+    {
+        Console.WriteLine("\nCurrent Inventory:");
+        for (int i = 0; i < products.GetLength(1); i++)
+        {
+            Console.WriteLine($"{i + 1}. {products[0, i]} - Stock: {products[1, i]}");
+        }
+        Console.WriteLine();
+    }
+
+    static void UpdateStock(string[,] products)
+    {
+        Console.Write("Enter the product number to update stock: ");
+        int productNumber = Convert.ToInt32(Console.ReadLine()) - 1;
+
+        if (productNumber >= 0 && productNumber < products.GetLength(1))
+        {
+            Console.Write("Enter new stock quantity: ");
+            products[1, productNumber] = Console.ReadLine();
+            Console.WriteLine("Stock updated successfully.\n");
+        }
+        else
+        {
+            Console.WriteLine("Invalid product number.\n");
+        }
+    }
+
+    static void ResetInventory(string[,] products, string[] initialStock)
+    {
+        for (int i = 0; i < products.GetLength(1); i++)
+        {
+            products[1, i] = initialStock[i];
+        }
+        Console.WriteLine("Inventory reset to initial values.\n");
+    }
+}
